@@ -1,0 +1,16 @@
+@use '../../scss/' as *;
+.footer {
+  position: relative;
+  padding: 6rem 2rem;
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.footer__content {
+  max-width: 1000px;
+}
+
+.footer__content__logo {
+  @in;
+}
