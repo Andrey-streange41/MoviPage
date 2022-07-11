@@ -26,13 +26,13 @@ const Details = () => {
   }, [category, id]);
 
   const handleClick = () => {
-    console.log(favoriteList)
+   
  
     for (const favorItem of favoriteList) {
         if(favorItem.id === item.id)
           return;
     }
-
+//missclick ????????????????
      dispatch(
        addToFavoriteList({
          item: item,
@@ -42,6 +42,14 @@ const Details = () => {
          link: `/${category}/${id}`,
        })
      );
+
+      
+    localStorage.setItem(item.id,JSON.stringify( {item:item,bg:`${config.originalimage(
+      item.backdrop_path || item.poster_path
+    )}`,link:`/${category}/${id}`}))
+    
+
+     
  }
 
   return (

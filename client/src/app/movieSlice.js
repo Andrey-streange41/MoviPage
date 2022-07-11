@@ -12,6 +12,9 @@ export const movieSlice = createSlice({
   name: "movie",
   initialState,
   reducers: {
+    clearList:(state, action) => {
+      state.favoriteMovies = [];
+    },
     addToFavoriteList: (state, action) => {
       const newFilm = {...action.payload.item};
       newFilm.link = action.payload.link;
@@ -29,6 +32,6 @@ export const movieSlice = createSlice({
   extraReducers: {},
 });
 
-export const {addToFavoriteList,removeFromFavoriteList} = movieSlice.actions;
+export const {addToFavoriteList,removeFromFavoriteList,clearList} = movieSlice.actions;
 
 export default movieSlice.reducer;

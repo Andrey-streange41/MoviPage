@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "../Button";
-import { removeFromFavoriteList } from "../../app/movieSlice";
+import {
+  clearList,
+  removeFromFavoriteList,
+} from "../../app/movieSlice";
 import "./favorite.scss";
+import { addToFavoriteList } from "../../app/movieSlice";
 
 export const FavoriteList = () => {
   const favoriteList = useSelector((state) => state.movie.favoriteMovies);
   const dispatch = useDispatch();
-  console.log(favoriteList);
+  
+  useEffect(() => {
+    dispatch(clearList())
+    for (let i = 0; i < localStorage.length; i++) {
+     const element = JSON.parse(localStorage.getItem(localStorage.key(i))) ;
+     dispatch(addToFavoriteList({item:element.item, bg:element.bg, link:element.link}));
+    }
+ },[localStorage.length])
+
   return (
     <div className="movie-grid">
       {favoriteList.length > 0 ? (
@@ -25,10 +37,11 @@ export const FavoriteList = () => {
             </Link>
 
             <div
-            style={{cursor:"pointer"}}
+              style={{ cursor: "pointer" }}
               onClick={(e) => {
                 e.stopPropagation();
                 dispatch(removeFromFavoriteList(item.id));
+                localStorage.removeItem(item.id);
               }}
               className="heart"
             >
