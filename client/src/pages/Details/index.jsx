@@ -8,13 +8,14 @@ import { VideoList } from "./VideoList";
 import MovieList from "../../components/MovieList/index";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToFavoriteList } from "../../app/movieSlice";
+import { updateFavoriteList } from "../../app/movieSlice";
+
 
 const Details = () => {
   const { category, id } = useParams();
   const [item, setItem] = useState(null);
   const dispatch = useDispatch();
-  const favoriteList = useSelector((state) => state.movie.favoriteMovies);
+  const localStorageList = useSelector (s=>s.movie.localStorageFavoriteList);
 
   useEffect(() => {
     const getDetail = async () => {
@@ -27,29 +28,19 @@ const Details = () => {
 
   const handleClick = () => {
    
- 
-    for (const favorItem of favoriteList) {
-        if(favorItem.id === item.id)
+    const buffer = [...localStorageList]
+    for (const favorItem of localStorageList) {
+        if(favorItem.item.id === item.id)
           return;
     }
-//missclick ????????????????
-     dispatch(
-       addToFavoriteList({
-         item: item,
-         bg: `${config.originalimage(
-           item.backdrop_path || item.poster_path
-         )}`,
-         link: `/${category}/${id}`,
-       })
-     );
 
-      
-    localStorage.setItem(item.id,JSON.stringify( {item:item,bg:`${config.originalimage(
-      item.backdrop_path || item.poster_path
-    )}`,link:`/${category}/${id}`}))
     
-
-     
+     buffer.push({item:item,bg:`${config.originalimage(
+      item.backdrop_path || item.poster_path
+    )}`,link:`/${category}/${id}`});
+     localStorage.removeItem("favoriteList");
+     localStorage.setItem("favoriteList", JSON.stringify(buffer));
+     dispatch(updateFavoriteList(buffer));
  }
 
   return (

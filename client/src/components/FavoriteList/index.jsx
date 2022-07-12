@@ -2,34 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "../Button";
-import {
-  clearList,
-  removeFromFavoriteList,
-} from "../../app/movieSlice";
+import { clearList, removeFromlocalStorageFavoriteList, updateFavoriteList } from "../../app/movieSlice";
 import "./favorite.scss";
-import { addToFavoriteList } from "../../app/movieSlice";
 
 export const FavoriteList = () => {
-  const favoriteList = useSelector((state) => state.movie.favoriteMovies);
   const dispatch = useDispatch();
-  
+  const localStorageList = useSelector((s) => s.movie.localStorageFavoriteList);
+  const [list,setList] = useState([])
+ 
   useEffect(() => {
-    
-    dispatch(clearList())
-    for (let i = 0; i < localStorage.length; i++) {
-     const element = JSON.parse(localStorage.getItem(localStorage.key(i))) ;
-      if(localStorage.key(i)==="ally-supports-cache"){
-        continue;
-      }
-      
-     dispatch(addToFavoriteList({item:element.item, bg:element.bg, link:element.link}));
-    }
- },[localStorage.length])
+    setList(localStorageList)
+  },[localStorageList])
 
   return (
     <div className="movie-grid">
-      {favoriteList.length > 0 ? (
-        favoriteList.map((item, i) => (
+      {list.length > 0 ? (
+        list.map((item, i) => (
           <div
             className="movie-card"
             style={{ backgroundImage: `url(${item.bg})` }}
@@ -45,8 +33,7 @@ export const FavoriteList = () => {
               style={{ cursor: "pointer" }}
               onClick={(e) => {
                 e.stopPropagation();
-                dispatch(removeFromFavoriteList(item.id));
-                localStorage.removeItem(item.id);
+                
               }}
               className="heart"
             >

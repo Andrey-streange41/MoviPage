@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 
 const Header = () => {
-  const amount = useSelector(state=>state.movie.favoriteMovies.length)
+  const amount= useSelector(s=>s.movie.localStorageFavoriteList.length);
   const { pathName } = useLocation();
   const headerRef = useRef(null);
   const [headerNav] = useState([

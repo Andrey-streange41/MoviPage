@@ -5,33 +5,21 @@ export const fetchMovieList = createAsyncThunk();
 const initialState = {
   error: null,
   status: "idle",
-  favoriteMovies: [],
+  localStorageFavoriteList: JSON.parse(localStorage.getItem("favoriteList"))?JSON.parse(localStorage.getItem("favoriteList")):[],
 };
 
 export const movieSlice = createSlice({
   name: "movie",
   initialState,
   reducers: {
-    clearList:(state, action) => {
-      state.favoriteMovies = [];
-    },
-    addToFavoriteList: (state, action) => {
-      const newFilm = {...action.payload.item};
-      newFilm.link = action.payload.link;
-      newFilm.bg = action.payload.bg;
-      state.favoriteMovies = [...state.favoriteMovies, newFilm];
-
-    },
-    removeFromFavoriteList: (state, action) => {
-      state.favoriteMovies = state.favoriteMovies.filter(
-        (movie) => movie.id !== action.payload
-      );
-    },
+    updateFavoriteList :(state,action)=>{
+       state.localStorageFavoriteList = [...action.payload];
+    }
   },
 
   extraReducers: {},
 });
 
-export const {addToFavoriteList,removeFromFavoriteList,clearList} = movieSlice.actions;
+export const {updateFavoriteList} = movieSlice.actions;
 
 export default movieSlice.reducer;
