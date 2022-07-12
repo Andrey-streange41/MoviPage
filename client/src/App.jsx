@@ -16,10 +16,13 @@ import { addToFavoriteList, clearList } from './app/movieSlice';
 function App() {
   const favoriteList = useSelector((s)=>s.movie.favoriteMovies);
   const dispatch = useDispatch();
+
  
   useEffect(() => {
-    dispatch(clearList())
+     dispatch(clearList());
      for (let i = 0; i < localStorage.length; i++) {
+      if("ally-supports-cache"===localStorage.key(i)) //   <= Теперь тут проверка
+        continue;
       const element = JSON.parse(localStorage.getItem(localStorage.key(i))) ;
       dispatch(addToFavoriteList({item:element.item, bg:element.bg, link:element.link}));
      }

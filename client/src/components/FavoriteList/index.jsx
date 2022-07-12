@@ -14,9 +14,14 @@ export const FavoriteList = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
+    
     dispatch(clearList())
     for (let i = 0; i < localStorage.length; i++) {
      const element = JSON.parse(localStorage.getItem(localStorage.key(i))) ;
+      if(localStorage.key(i)==="ally-supports-cache"){
+        continue;
+      }
+      
      dispatch(addToFavoriteList({item:element.item, bg:element.bg, link:element.link}));
     }
  },[localStorage.length])

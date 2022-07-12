@@ -10,7 +10,7 @@ import Input from "../Input/index";
 export const MovieGrid = (props) => {
   const { keyword } = useParams();
   const [items, setItems] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);  // <= Вместо нуля написал 1
   const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
