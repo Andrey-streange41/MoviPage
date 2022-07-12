@@ -33,7 +33,10 @@ export const FavoriteList = () => {
               style={{ cursor: "pointer" }}
               onClick={(e) => {
                 e.stopPropagation();
-                
+             console.log (  item.item.id)
+                let ls = localStorageList.filter((el)=>el.item.id !== item.item.id);
+                localStorage.setItem("favoriteList", JSON.stringify(ls));
+                dispatch(updateFavoriteList(JSON.parse(localStorage.getItem("favoriteList"))));
               }}
               className="heart"
             >

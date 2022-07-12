@@ -37,6 +37,9 @@ const MovieList = (props) => {
           console.log(error.message)
         }
       }
+
+      
+      
       setItems(responce.results);
     };
     getList();
@@ -55,11 +58,11 @@ const MovieList = (props) => {
         spaceBetween={10}
         slidesPerView={"auto"}
       >
-        {items.map((item, i) => (
-          <SwiperSlide key={i}>
+        {items.map((item, i) => {
+          return <SwiperSlide key={i}>
             <MovieCard item={item} category={props.category} />
           </SwiperSlide>
-        ))}
+        })}
       </Swiper>
     </div>
   );
