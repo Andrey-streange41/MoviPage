@@ -16,7 +16,6 @@ import { addToFavoriteList, clearList } from './app/movieSlice';
 function App() {
   const favoriteList = useSelector((s)=>s.movie.favoriteMovies);
   const dispatch = useDispatch();
-
  
   useEffect(() => {
      dispatch(clearList());

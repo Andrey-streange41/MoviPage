@@ -11,7 +11,7 @@ export const MovieGrid = (props) => {
   const { keyword } = useParams();
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);  // <= Вместо нуля написал 1
-  const [totalPage, setTotalPage] = useState(0);
+  const [totalPage, setTotalPage] = useState();
 
   useEffect(() => {
     const getList = async () => {
@@ -70,9 +70,11 @@ export const MovieGrid = (props) => {
       </section>
       <div className="movie-grid">
         {items.length > 0 ? (
-          items.map((item, i) => (
-            <MovieCard category={props.category} item={item} key={i} />
-          ))
+          items.map((item, i) => {
+            if(i===20)
+             return;
+            return <MovieCard category={props.category} item={item} key={i} />
+          })
         ) : (
           <span className="foundNothing">Nothing found for your request !</span>
         )}
