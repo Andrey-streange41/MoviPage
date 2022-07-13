@@ -54,14 +54,14 @@ const Details = () => {
                 item.backdrop_path || item.poster_path
               )})`,
             }}
-          ></div>
-          <section className="mb-3 movie-content container">
+          >HD</div>
+          <section className="mb-3 movie-content container" >
             <div className="movie-content__poster">
               <div
                 className="movie-content__poster__img"
                 style={{
-                  backgroundImage: `url(${config.originalimage(
-                    item.backdrop_path || item.poster_path
+                    backgroundImage: `url(${config.originalimage(
+                     item.poster_path
                   )})`,
                 }}
               ></div>
